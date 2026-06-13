@@ -1,0 +1,94 @@
+<mujoco>
+    <compiler meshdir="meshes" angle="degree" />
+
+    <asset>
+        <mesh name="foot" file="Foot_RL_30_05.stl" scale="0.001 0.001 0.001" />
+        <mesh name="cardan" file="Cardan_30_05.stl" scale="0.001 0.001 0.001" />
+        <mesh name="crank_right_in" file="Crank_01_06.stl" scale="0.001 0.001 0.001" />
+        <mesh name="crank_right_out" file="Crank_01_06.stl" scale="0.001 0.001 0.001" />
+        <mesh name="shank_right" file="Shank_right_01_06.stl" scale="0.001 0.001 0.001" />
+        <mesh name="thigh_knee_yaw" file="Thigh_knee_yaw_11_06.stl" scale="0.001 0.001 0.001" />
+        <mesh name="thigh_yaw_roll" file="Thigh_yaw_roll_11_06.stl" scale="0.001 0.001 0.001" />
+        <mesh name="thigh_roll_pitch" file="Thigh_roll_pitch_12_06.stl" scale="0.001 0.001 0.001" />
+        <mesh name="rod1" file="ROD1_30_05.stl" scale="0.001 0.001 0.001" />
+        <mesh name="rod2" file="ROD2_30_05.stl" scale="0.001 0.001 0.001" />
+        <mesh name="Hips" file="Hips_12_06.stl" scale="0.001 0.001 0.001" />
+    </asset>
+
+    <worldbody>
+        <body name="foot_body">
+            <geom name="foot_geom" type="mesh" mesh="foot" euler="0 0 90" rgba="0.85 0.85 0.85 1" mass="0.978" />
+
+            <body name="cardan_body" pos="0 0 0.05" euler="0 90 0">
+                <!--<inertial pos="0 0 0" mass="0.0001" diaginertia="1e-8 1e-8 1e-8" />-->
+                <joint name="cardan_y" type="hinge" axis="0 1 0" damping="0.02" limited="true" range="-24 24" />
+                <geom name="cardan_geom" type="mesh" mesh="cardan" pos="0 0 -0.03125" rgba="0.65 0.65 0.7 1" mass="0.370" />
+
+                <body name="shank_right_body" pos="0 0 0.015">
+                    <joint name="shank_right_y" type="hinge" axis="0 0 1" damping="0.02"  limited="true" range="-48 48"/>
+                    <geom name="shank_right_geom" type="mesh" mesh="shank_right" euler="0 -90 270" rgba="0.72 0.72 0.76 1" mass="1.807" />
+ 
+                    <body name="thigh_knee_yaw_body" pos="-0.35 0 0.0178" euler="0 0 90">
+                        <joint name="thigh_knee_yaw_y" type="hinge" pos="0 0 -0.0377" axis="0 0 1" damping="0.02" limited="true" range="-135 5" />
+                        <geom name="thigh_knee_yaw_geom" type="mesh" mesh="thigh_knee_yaw" euler="-90 0 0" rgba="0.72 0.72 0.76 1"  mass="2.743" />
+                        <site name="thigh_knee_yaw_rod1_site" pos="0 0 -0.0377" size="0.002" rgba="0.9 0.2 0.2 1" />
+
+                        <body name="thigh_yaw_roll_body" pos="-0.020082750670456794 0.22948408033131248 -0.0328" euler="90 0.046 112.5">
+                            <joint name="thigh_yaw_roll_y" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.02" limited="true" range="-45 45" />
+                            <geom name="thigh_yaw_roll_geom" type="mesh" mesh="thigh_yaw_roll" euler="180 0 0" rgba="0.72 0.72 0.76 1" mass="0.957" />
+                            <site name="thigh_yaw_roll_rod2_site" pos="0 0 -0.0377" size="0.002" rgba="0.9 0.2 0.2 1" />
+
+                             <body name="thigh_roll_pitch_body" pos="0.012629 0.030488 -0.064" euler="0 0 -112.5">
+                                <joint name="thigh_roll_pitch_y" type="hinge" pos="0 0 0" axis="1 0 0" damping="0.02" limited="true" range="-45 20" />
+                                <geom name="thigh_roll_pitch_geom" type="mesh" mesh="thigh_roll_pitch" euler="180 0 0" rgba="0.72 0.72 0.76 1" mass="1.183" />
+                                <body name="hips_body" pos="0.032974 0.1415 -0.017" euler="0 0 0">
+                                    <joint name="hips_y" type="hinge" pos="0 -0.094047 -0.01482" axis="0 0.819152 -0.573576" damping="0.02" limited="true" range="-90 90" />
+                                    <site name="hips_axis_origin_site" pos="0 -0.094047 -0.01482" size="0.004" rgba="1 0 0 1" />
+                                    <site name="hips_axis_dir_site" pos="0 -0.047586 -0.071104" size="0.003" rgba="0 0.6 1 1" />
+                                    <geom name="hips_geom" type="mesh" mesh="Hips" euler="180 0 0" rgba="0.72 0.72 0.76 1" mass="2.138" />
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+
+                    <body name="crank_right_in_body" pos="-0.15 0 0.016" euler="0 -90 0">
+                        <joint name="crank_right_in_z" type="hinge" axis="1 0 0" damping="0.02" limited="true" range="-90 90" />
+                        <geom name="crank_right_in_geom" type="mesh" mesh="crank_right_in"  euler="0 0 0" rgba="0.78 0.78 0.8 1" />
+                        <site name="crank_right_in_rod2_site" pos="0.012 0.036 0.00" size="0.002" rgba="0.9 0.2 0.2 1" />
+                    </body>
+
+                    <body name="crank_right_out_body" pos="-0.230 0 -0.046" euler="0 90 0">
+                        <joint name="crank_right_out_z" type="hinge" axis="1 0 0" damping="0.02" limited="true" range="-90 90" />
+                        <geom name="crank_right_out_geom" type="mesh" mesh="crank_right_out" euler="0 0 0" rgba="0.78 0.78 0.8 1" />
+                        <site name="crank_right_out_rod1_site" pos="0.012 0.036 0.00" size="0.002" rgba="0.9 0.2 0.2 1" />
+                    </body>
+                </body>
+            </body>
+
+            <body name="rod1_x_body" pos="-0.0335 0.05325 0.05">
+                <inertial pos="0 0 0" mass="0.0001" diaginertia="1e-8 1e-8 1e-8" />
+                <joint name="rod1_x" type="hinge" axis="1 0 0" damping="0.02" limited="true" range="-145 100" />
+                <body name="rod1_body">
+                    <joint name="rod1_y" type="hinge" axis="0 1 0" damping="0.02" limited="true" range="-10 10" />
+                    <geom name="rod1_geom" type="mesh" mesh="rod1" euler="0 0 90" rgba="0.75 0.75 0.75 1" />
+                    <site name="rod1_crank_right_out_site" pos="0 0 0.2235" size="0.002" rgba="0.2 0.45 0.9 1" />
+                </body>
+            </body>
+
+            <body name="rod2_x_body" pos="0.0335 0.05325 0.05">
+                <inertial pos="0 0 0" mass="0.0001" diaginertia="1e-8 1e-8 1e-8" />
+                <joint name="rod2_x" type="hinge" axis="1 0 0" damping="0.02" limited="true" range="-145 100" />
+                <body name="rod2_body">
+                    <joint name="rod2_y" type="hinge" axis="0 1 0" damping="0.02" limited="true" range="-10 10" />
+                    <geom name="rod2_geom" type="mesh" mesh="rod2" euler="0 0 90" rgba="0.75 0.75 0.75 1" />
+                    <site name="rod2_crank_right_in_site" pos="0 0 0.1475" size="0.002" rgba="0.2 0.45 0.9 1" />
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <equality>
+        <connect name="rod1_crank_right_out_connect" site1="rod1_crank_right_out_site" site2="crank_right_out_rod1_site" solref="0.004 1" />
+        <connect name="rod2_crank_right_in_connect" site1="rod2_crank_right_in_site" site2="crank_right_in_rod2_site" solref="0.004 1" />
+    </equality>
+</mujoco>
