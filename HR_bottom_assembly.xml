@@ -26,7 +26,9 @@
 	</asset>
 
 	<worldbody>
-		<body name="hips_body" pos="0 0 0.75" quat="-0.000283851 0.707106724 0.707106724 0.000283851">
+		<geom name="floor" type="plane" pos="0 0 0" size="3 3 0.1" rgba="0.24 0.28 0.32 1" />
+		<body name="hips_body" pos="0 0 0.71" quat="-0.000283851 0.707106724 0.707106724 0.000283851">
+			<freejoint name="root_free" />
 			<geom name="hips_geom" type="mesh" mesh="Hips" euler="180 0 0" rgba="0.72 0.72 0.76 1" mass="2.138" />
 			<site name="hips_axis_origin_site" pos="0 -0.094047 -0.01482" size="0.004" rgba="1 0 0 1" />
 			<site name="hips_axis_dir_site" pos="0 -0.153831 0.027041" size="0.003" rgba="0 0.6 1 1" />
